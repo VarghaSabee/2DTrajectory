@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Modeling random</title>
+  <!-- stylesheet ? -->
+  <style>
+     .container{
+       height: 100px;
+     }
+     input[type="button"]:hover,input[type="checkbox"]:hover{
+       cursor: pointer;
+     }
+     input[type="text"]{
+       width: 50px;
+     }
+  </style>
+</head>
+<body style="overflow: hidden">
+  <div class="container">
+    <input type="button" class="add" value="Add gravity">
+    <input type="button" class="sub" value="Sub gravity">
+    <input type="button" class="coord" value="Cordinates">
+    <label>Draw trajectory: </label>
+    <input type="checkbox" class="drawdot" value="Draw trajectory">
+    <label>Count: </label>
+    <input type="text" class="cfire" value="1">
+    <input type="button" class="fire" value="Fire">
+    <input type="button" class="clear" value="Clear">
+  </div>
+
+  <canvas id="canvas"></canvas>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="js/arrow.js"></script>
+  <script src="js/archery.js"></script>
+  <script>
+    $(document).ready(function(){
+
+    var fireing = true;
+    $('.add').on('click',function(){
+      gravity += 0.1;
+    });    
+    $('.sub').on('click',function(){
+      gravity -= 0.1;
+    });
+    $('.coord').on('click',function(){
+
+     // var maxX = Math.max.apply(Math, firedArrows.map(function(o) { return o.arrowTipCoords.x; }));
+     // var minX = Math.min.apply(Math, firedArrows.map(function(o) { return o.arrowTipCoords.x; }));
+
+    });    
+
+    $('.clear').on('click',function(){
+      clearCanvas();
+    });
+    $('.drawdot').on('click',function(){
+      if($(this).is(':checked')){
+        drawDots = true;
+      } else {
+        drawDots = false;
+      }
+    });
+    $('.fire').on('click',function(){
+      
+      if(fireing){
+        fireing = false;
+        var count = $('.cfire').val();
+
+      var delay = 100;
+      var i = 0, howManyTimes = count;
+      function f() {
+        var rnd = (-0.5 + Math.random());
+        // rnd = rnd.toFixed(1);
+        angle = -1.2 + rnd/10;  //min 628 - max 759
+        currArrow.OriginAngle = rnd;
+        // console.log(angle);
+          firedArrow = true;
+          i++;
+          if( i < howManyTimes ){
+              setTimeout( f, delay );
+          }
+          if(i == count){fireing = true;}
+      }
+      f();
+      }
+
+    });
+
+    });
+
+  </script>
+</body>
+
+</html>
